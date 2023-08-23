@@ -6,7 +6,6 @@ import {
   eliminarProyecto,
   agregarcolaborador,
   eliminarColaborador,
-  obtenerTareas,
 } from "../controllers/proyectoController.js";
 
 import express from "express";
@@ -25,7 +24,6 @@ router
   .put(checkAuth, editarProyecto)
   .delete(checkAuth, eliminarProyecto);
 
-router.get("/tareas/:id", checkAuth, obtenerTareas);
 router.post("/agregar-colaborador/:id", checkAuth, agregarcolaborador);
 router.post("/eliminar-colaborador/:id", checkAuth, eliminarColaborador);
 
