@@ -17,7 +17,6 @@ const tareaSchema = mongoose.Schema({
   },
   fechaEntraga:{
     type:Date,
-    required:true,
     dafault:Date.now()
   },
   prioridad:{

@@ -10,7 +10,7 @@ import checkAuth from "../middleware/checkAuth.js";
 
 const tareaRouter = express.Router();
 
-tareaRouter.post("/", agregarTarea);
+tareaRouter.post("/", checkAuth, agregarTarea);
 tareaRouter
   .route("/:id")
   .get(checkAuth, obtenerTarea)
