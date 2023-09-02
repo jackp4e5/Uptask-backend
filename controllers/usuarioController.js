@@ -1,3 +1,4 @@
+import { emailOlvidePassword, emailRegistro } from "../helpers/emails.js";
 import generarId from "../helpers/generarId.js";
 import generarJWT from "../helpers/generarJWT.js";
 import Usuario from "../models/Usuario.js";
@@ -15,8 +16,17 @@ const registrar = async (req, res) => {
   try {
     const usuario = new Usuario(req.body);
     usuario.token = generarId();
-    const usuarioAlmacenado = await usuario.save();
-    res.json(usuarioAlmacenado);
+    await usuario.save();
+    //  enviar email de confirmación
+
+    emailRegistro({
+      email: usuario.email,
+      name: usuario.name,
+      token: usuario.token,
+    });
+    res.json({
+      msg: "Usuario creado correctamente, llegará una verificación a tu correo",
+    });
   } catch (error) {
     console.log(error);
   }
@@ -56,7 +66,7 @@ const confirmar = async (req, res) => {
   const { token } = req.params;
   const usuarioConfirmar = await Usuario.findOne({ token });
   if (!usuarioConfirmar) {
-    const error = new Error("El token no es valido intenta más tarde");
+    const error = new Error("El token no es valido intenta nuevamente");
     return res.status(403).json({ msg: error.message });
   }
   try {
@@ -81,6 +91,15 @@ const olvidePassword = async (req, res) => {
   try {
     usuario.token = generarId();
     await usuario.save();
+
+    // enviar email
+
+    emailOlvidePassword({
+      email: usuario.email,
+      name: usuario.name,
+      token: usuario.token,
+    });
+
     res.json({ msg: "Hemos enviado un email con las instrucciones" });
   } catch (error) {
     console.log(error);

@@ -16,11 +16,11 @@ const usuarioRouter = express.Router();
 usuarioRouter.post("/", registrar);
 usuarioRouter.post("/login", autenticar);
 usuarioRouter.get("/confirmar/:token", confirmar);
-usuarioRouter.post("/recuperar-password", olvidePassword);
-// usuarioRouter.get("/recuperar-password/:token", comprobarToken);
-// usuarioRouter.post("/recuperar-password/:token", nuevoPassword);
+usuarioRouter.post("/olvide-password", olvidePassword);
+// usuarioRouter.get("/olvide-password/:token", comprobarToken);
+// usuarioRouter.post("/olvide-password/:token", nuevoPassword);
 usuarioRouter
-  .route("/recuperar-password/:token")
+  .route("/olvide-password/:token")
   .get(comprobarToken)
   .post(nuevoPassword);
 
