@@ -32,9 +32,11 @@ const obtenerProyecto = async (req, res) => {
     const error = new Error("Proyecto no encontrado");
     return res.status(404).json({ msg: error.message });
   }
-  if (proyecto.creador.toString() !== req.usuario._id.toString()) {
+  if (
+    proyecto.creador.toString() !== req.usuario._id.toString() &&
+    proyecto.colaboradores.some(colaborador => colaborador._id.toString() === req.usuario.toString())
+  ) {
     const error = new Error("Acción No válida");
-    console.log(error);
     return res.status(401).json({ msg: error.message });
   }
 
