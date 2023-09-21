@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 import sgMail from "@sendgrid/mail";
 // import dotenv from "dotenv";
+// dotenv.config();
 
-dotenv.config();
 export const emailRegistro = async (datos) => {
   const { name, email, token } = datos;
 
@@ -14,10 +14,30 @@ export const emailRegistro = async (datos) => {
     subject: "UpTask - confirma tu cuenta",
     text: "Comprueba tu cuenta en UpTask",
     html: `
-            <p>Hola ${name},</p>
-            <p>Tu cuenta en UpTask está casi lista. Por favor, confírmala haciendo clic en el siguiente enlace:</p>
-            <a href="${process.env.FRONTEN_URL}/confirmar/${token}">Comprobar cuenta</a>
-            <p>Si no has creado esta cuenta, puedes ignorar este mensaje.</p>
+    <div style=" text-align:center; color: rgb(5, 9, 24); font-family: cursive, sans-serif">
+    <h1
+      style="
+        font-size: 20px;
+        font-weight: 700;
+        color: rgb(4, 43, 70);
+        text-align: center;
+      "
+    >
+      UpTask
+    </h1>
+
+    <p>
+      Hola<span style="font-weight: 700">${name}</span>, tu cuenta en UpTask
+      está casi lista. Por favor, confírmala haciendo clic en el siguiente
+      enlace:
+    </p>
+    <a
+      style="font-weight: 700; color: rgb(4, 43, 70)"
+      href="${process.env.FRONTEN_URL}/confirmar/${token}"
+      >Comprobar cuenta</a
+    >
+    <p>Si no has creado esta cuenta, puedes ignorar este mensaje.</p>
+  </div>
           `,
   };
   sgMail
@@ -61,10 +81,20 @@ export const emailOlvidePassword = async (datos) => {
     subject: "UpTask - Reestablece tu contraseña",
     text: "Reestablece tu contraseña",
     html: `
-            <p style="text-transform: lowercase; font-family: 'Lucida Sans', sans-serif;">Hola ${name}, has solicitado reestablecer tu contraseña</p>
-            <p style="text-transform: lowercase; font-family: 'Lucida Sans', sans-serif;">Sigue el siguiente enlace para generar una nueva contraseña:</p>
-            <a style="text-transform: lowercase; font-family: 'Lucida Sans', sans-serif;" href="${process.env.FRONTEN_URL}/olvide-password/${token}">Reestablecer contraseña</a>
-            <p style="text-transform: lowercase; font-family: 'Lucida Sans', sans-serif;" >Si no has solicitado este email, puedes ignorar este mensaje.</p>
+    <div style=" text-align:center; color: rgb(5, 9, 24); font-family: cursive, sans-serif">
+    <h1 style="font-size: 20px; font-weight: 700; color: rgb(4, 43, 70); text-align: center;" >UpTask</h1>
+    <p>
+      Hola <span style="font-weight: 700">${name}</span>, has solicitado
+      reestablecer tu contraseña
+    </p>
+    <p>Sigue el siguiente enlace para generar una nueva contraseña:</p>
+    <a
+      style="font-weight: 700; color: rgb(4, 43, 70)"
+      href="${process.env.FRONTEN_URL}/olvide-password/${token}"
+      >Reestablecer contraseña</a
+    >
+    <p>Si no has solicitado este email, puedes ignorar este mensaje.</p>
+  </div>
           `,
   };
   sgMail

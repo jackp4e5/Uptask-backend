@@ -6,30 +6,35 @@ const tareaSchema = mongoose.Schema({
     trim: true,
     required: true,
   },
+
   descripcion: {
     type: String,
     trim: true,
     required: true,
   },
+
   estado:{
     type:Boolean,
     default:false
   },
-  fechaEntraga:{
+
+  fechaEntrega:{
     type:Date,
     dafault:Date.now()
   },
+
   prioridad:{
     type:String,
     required:true,
     enum:["Baja","Media","Alta"],
   },
+  
   proyecto:{
     type: mongoose.Schema.Types.ObjectId,
     ref:"Proyecto" // este asemeja el modelo de proyecto
   }
 },{
-    timeStamps:true
+    timestamps:true
 });
 
 const Tarea = mongoose.model("Tarea",tareaSchema)

@@ -7,25 +7,37 @@ const proyectosSchema = mongoose.Schema(
       trim: true,
       required: true,
     },
+
     descripcion: {
       type: String,
       trim: true,
       required: true,
     },
+
     fechaEntrega: {
       type: Date,
       default: Date.now(),
     },
+
     cliente: {
       type: String,
       trim: true,
       required: true,
     },
+
+    tareas: [
+      {
+        type: Types.ObjectId,
+        ref: "Tarea", // Hace referencia al modelo de tarea
+      },
+    ],
+
     creador: {
       type: Types.ObjectId,
-      ref: "Usuario", // aqui semeja el modelo de Usuario
+      ref: "Usuario", // hace referencia al modelo de Usuario
     },
-    colaboladores: [
+
+    colaboradores: [
       {
         type: Types.ObjectId,
         ref: "Usuario", // aqui semeja el modelo de Usuario
