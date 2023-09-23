@@ -73,12 +73,12 @@ const eliminarTarea = async (req, res) => {
   const tarea = await Tarea.findById(id).populate("proyecto");
 
   if (!tarea) {
-    const error = Error({ msg: "Tarea no encontrada" });
+    const error = Error( "Tarea no encontrada");
     return res.status(404).json({ msg: error.message });
   }
 
   if (tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
-    const error = Error({ msg: "Acción No Válida" });
+    const error = Error("Acción No Válida" );
     return res.status(403).json({ msg: error.message });
   }
 

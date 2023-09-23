@@ -1,5 +1,4 @@
 import Proyecto from "../models/Proyecto.js";
-import Tarea from "../models/Tareas.js";
 import Usuario from "../models/Usuario.js";
 
 const nuevoProyecto = async (req, res) => {
@@ -71,19 +70,19 @@ const eliminarProyecto = async (req, res) => {
   const { id } = req.params;
   const proyecto = await Proyecto.findById(id);
   if (!proyecto) {
-    const error = new Error({ msg: "Proyecto no encontrado" });
+    const error = new Error("Proyecto no encontrado");
     return res.status(404).json({ msg: error.message });
   }
   if (proyecto.creador.toString() !== req.usuario._id.toString()) {
-    const error = new Error({ msg: "Acción No válida" });
-    return res.status(401).json({ msg: error.message });
+    const error = new Error(  "Acción No válida" );
+    return res.status(401).json({ msg: error.message});
   }
 
   try {
     await proyecto.deleteOne();
     res.json({ msg: "Proyecto eliminado " });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 const buscarColaborador = async (req, res) => {
