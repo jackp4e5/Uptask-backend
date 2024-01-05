@@ -25,7 +25,7 @@ const obtenerProyectos = async (req, res) => {
 const obtenerProyecto = async (req, res) => {
   const { id } = req.params;
   const proyecto = await Proyecto.findById(id)
-    .populate("tareas")
+    .populate({ path: "tareas", populate: { path: "completado", select: "name"} })
     .populate("colaboradores", "name  email");
   if (!proyecto) {
     const error = new Error("Proyecto no encontrado");
@@ -33,7 +33,9 @@ const obtenerProyecto = async (req, res) => {
   }
   if (
     proyecto.creador.toString() !== req.usuario._id.toString() &&
-    proyecto.colaboradores.some(colaborador => colaborador._id.toString() === req.usuario.toString())
+    !proyecto.colaboradores.some(
+      (colaborador) => colaborador._id.toString() === req.usuario._id.toString()
+    )
   ) {
     const error = new Error("Acción No válida");
     return res.status(401).json({ msg: error.message });
@@ -74,8 +76,8 @@ const eliminarProyecto = async (req, res) => {
     return res.status(404).json({ msg: error.message });
   }
   if (proyecto.creador.toString() !== req.usuario._id.toString()) {
-    const error = new Error(  "Acción No válida" );
-    return res.status(401).json({ msg: error.message});
+    const error = new Error("Acción No válida");
+    return res.status(401).json({ msg: error.message });
   }
 
   try {

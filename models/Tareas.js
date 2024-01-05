@@ -1,42 +1,49 @@
 import mongoose from "mongoose";
 
-const tareaSchema = mongoose.Schema({
-  nombre: {
-    type: String,
-    trim: true,
-    required: true,
-  },
+const tareaSchema = mongoose.Schema(
+  {
+    nombre: {
+      type: String,
+      trim: true,
+      required: true,
+    },
 
-  descripcion: {
-    type: String,
-    trim: true,
-    required: true,
-  },
+    descripcion: {
+      type: String,
+      trim: true,
+      required: true,
+    },
 
-  estado:{
-    type:Boolean,
-    default:false
-  },
+    estado: {
+      type: Boolean,
+      default: false,
+    },
 
-  fechaEntrega:{
-    type:Date,
-    dafault:Date.now()
-  },
+    fechaEntrega: {
+      type: Date,
+      dafault: Date.now(),
+    },
 
-  prioridad:{
-    type:String,
-    required:true,
-    enum:["Baja","Media","Alta"],
+    prioridad: {
+      type: String,
+      required: true,
+      enum: ["Baja", "Media", "Alta"],
+    },
+
+    proyecto: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Proyecto", // este asemeja el modelo de proyecto
+    },
+    completado: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Usuario", // este asemeja el modelo de proyecto
+    },
   },
-  
-  proyecto:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:"Proyecto" // este asemeja el modelo de proyecto
+  {
+    timestamps: true,
   }
-},{
-    timestamps:true
-});
+);
 
-const Tarea = mongoose.model("Tarea",tareaSchema)
+const Tarea = mongoose.model("Tarea", tareaSchema);
 
-export default Tarea
+export default Tarea;
